@@ -14,10 +14,16 @@ public class player : MonoBehaviour
 
     public float moveSpeed = 10f;
     public float jumpSpeed = 10f;
+    public float jumpButtonGracePeriod;
+    private float? lastGroundedTime;
+    private float? jumpButtonPressedTime;
     private float ySpeed;
     private float inputH;
     private float inputV;
     private float originalStepOffset;
+
+    private bool isJumping;
+    private bool isGrounded;
 
     void Start()
     {
@@ -53,15 +59,39 @@ public class player : MonoBehaviour
 
         ySpeed += Physics.gravity.y * Time.deltaTime;
 
-        // jump
         if (controller.isGrounded) {
+            lastGroundedTime = Time.time;
+        }
+
+        if ((Input.GetButtonDown("Jump") || (Input.GetButtonDown("Vertical") && inputV > 0))) {
+            jumpButtonPressedTime = Time.time;
+        }
+
+        // jump
+        if (Time.time - lastGroundedTime <= jumpButtonGracePeriod) {
             controller.stepOffset = originalStepOffset;
             ySpeed = -0.1f;
-            if (Input.GetButton("Jump") || (Input.GetButton("Vertical") && inputV > 0)) {
+            anim.SetBool("isgrounded", true);
+            isGrounded = true;
+            anim.SetBool("isjumping", false);
+            isJumping = false;
+            anim.SetBool("isfalling", false);
+
+            if (Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod) {
                 ySpeed = jumpSpeed;
+                anim.SetBool("isjumping", true);
+                isJumping = true;
+                jumpButtonPressedTime = null;
+                lastGroundedTime = null;
             }
         } else {
             controller.stepOffset = 0f;
+            anim.SetBool("isgrounded", false);
+            isGrounded = false;
+
+            if ((isJumping && ySpeed < 0) || ySpeed < -2) {
+                anim.SetBool("isfalling", true);
+            }
         }
 
 

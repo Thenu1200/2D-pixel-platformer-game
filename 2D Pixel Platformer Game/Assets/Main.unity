@@ -451,7 +451,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
   moveSpeed: 5
-  jumpSpeed: 5
+  jumpSpeed: 7.5
+  jumpButtonGracePeriod: 0.2
 --- !u!143 &798478140
 CharacterController:
   m_ObjectHideFlags: 0
@@ -524,7 +525,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -548,7 +549,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: -1}
-  m_LocalPosition: {x: -0, y: 1, z: -3}
+  m_LocalPosition: {x: -0, y: 2.5, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -568,7 +569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 744251733}
   smoothSpeed: 0.125
-  offset: {x: 0, y: 1, z: -6}
+  offset: {x: 0, y: 2, z: -6}
 --- !u!1 &1981082449
 GameObject:
   m_ObjectHideFlags: 0
