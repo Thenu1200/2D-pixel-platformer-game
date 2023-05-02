@@ -15,13 +15,14 @@ public class player : MonoBehaviour
     public float moveSpeed = 10f;
     public float jumpSpeed = 10f;
     public float jumpButtonGracePeriod;
+    public float idleAnimationDelay = 20f;
     private float? lastGroundedTime;
     private float? jumpButtonPressedTime;
     private float ySpeed;
     private float inputH;
     private float inputV;
     private float originalStepOffset;
-
+    private float idleTimer;
     private bool isJumping;
     private bool isGrounded;
 
@@ -34,6 +35,43 @@ public class player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        move();
+        bored();
+    }
+
+    private void bored()
+    {
+        //check if player animation state is idle
+        if (anim.GetCurrentAnimatorStateInfo(0).IsName("IDLE"))
+        {
+            idleTimer += Time.deltaTime;
+            if (idleTimer >= idleAnimationDelay)
+            {
+                //get random number from 1 to 4
+                int randomIdle = UnityEngine.Random.Range(1, 5);
+                if (randomIdle == 1) {
+                    anim.Play("WAIT01", -1, 0f);
+                }
+                if (randomIdle == 2) {
+                    anim.Play("WAIT02", -1, 0f);
+                }
+                if (randomIdle == 3) {
+                    anim.Play("WAIT03", -1, 0f);
+                }
+                if (randomIdle == 4) {
+                    anim.Play("WAIT04", -1, 0f);
+                }
+                idleTimer = 0;
+            }
+        }
+        else
+        {
+            idleTimer = 0;
+        }
+    }
+
+    private void move()
     {
         // get input from user
         inputH = Input.GetAxis("Horizontal");
@@ -98,8 +136,5 @@ public class player : MonoBehaviour
         Vector3 velocity = movementDirection * magnitude;
         velocity.y = ySpeed;
         controller.Move(velocity * Time.deltaTime);
-        
     }
-
-
 }

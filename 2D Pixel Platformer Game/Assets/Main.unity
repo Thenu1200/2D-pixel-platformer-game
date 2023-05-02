@@ -452,7 +452,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   moveSpeed: 5
   jumpSpeed: 7.5
-  jumpButtonGracePeriod: 0.2
+  jumpButtonGracePeriod: 0.1
 --- !u!143 &798478140
 CharacterController:
   m_ObjectHideFlags: 0
